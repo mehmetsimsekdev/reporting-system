@@ -23,11 +23,11 @@ public class ReportController {
         this.reportService = reportService;
     }
     
-     @GetMapping
+    /*  @GetMapping
     public List<Report> getAllreports(@RequestParam Optional<Long> userId){
         return reportService.getAllreports(userId);
         
-    }
+    } */
 
     @GetMapping("/{reportId}")
     public Report getOneReport(@PathVariable Long reportId){

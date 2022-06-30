@@ -17,11 +17,11 @@ public class ReportService {
         this.reportRepository = postRepository;
     }
 
-    public List<Report> getAllreports(Optional<Long> userId) {
+   /* *public List<Report> getAllreports(Optional<Long> userId) {
         if(userId.isPresent())
             return reportRepository.findByPatienceID(userId.get());
         return reportRepository.findAll();
-    }
+    } */
 
     public Report getOneReportById(Long reportId) {
         return reportRepository.findById(reportId).orElse(null);
