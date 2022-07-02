@@ -7,7 +7,7 @@ import com.project.ozguryazilim.entities.Report;
 
 public interface ReportRepository extends JpaRepository<Report, Long>{
 
-// List<Report> findByPatienceID(Long patienceId);
+    List<Report> findByUserId(Long userId);
 
     
 }

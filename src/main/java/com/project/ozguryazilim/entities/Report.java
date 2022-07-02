@@ -36,7 +36,7 @@ public class Report {
     @Lob
     @Column(columnDefinition = "text")
     Long reportId;
-    Long patienceID;
+    Long patienceId;
     String patientName;
     String diseaseTitle;
     String diseaseDefinition;

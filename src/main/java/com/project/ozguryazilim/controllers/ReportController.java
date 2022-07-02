@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ozguryazilim.entities.Report;
+import com.project.ozguryazilim.requests.ReportCreateRequest;
 import com.project.ozguryazilim.services.ReportService;
 
 @RestController
@@ -23,11 +24,11 @@ public class ReportController {
         this.reportService = reportService;
     }
     
-    /*  @GetMapping
+    @GetMapping
     public List<Report> getAllreports(@RequestParam Optional<Long> userId){
         return reportService.getAllreports(userId);
         
-    } */
+    } 
 
     @GetMapping("/{reportId}")
     public Report getOneReport(@PathVariable Long reportId){
@@ -35,7 +36,7 @@ public class ReportController {
     }
 
     @PostMapping
-    public Report createOneReport(@RequestBody Report newReport){
-        return reportService.createOneReport(newReport);
+    public Report createOneReport(@RequestBody ReportCreateRequest newReportRequest){
+        return reportService.createOneReport(newReportRequest);
     }
 }
