@@ -32,24 +32,24 @@ public class UserController {
 
     }
     @PostMapping
-    public User creatUser(@RequestBody User newUser){
+    public User createUser(@RequestBody User newUser){
         return userService.saveOneUser(newUser);
 
     }
 
-    @GetMapping("/{userID}")
-    public User getOneUser(@PathVariable Long userID){
+    @GetMapping("/{userId}")
+    public User getOneUser(@PathVariable Long userId){
         //custom exception
-        return userService.getOneUser(userID);
+        return userService.getOneUser(userId);
     }
-    @PutMapping("/{userID}")
-    public User updateOneUser(@PathVariable Long userID,@RequestBody User newUser){
-        return userService.updateOneUser(userID,newUser);
+    @PutMapping("/{userId}")
+    public User updateOneUser(@PathVariable Long userId,@RequestBody User newUser){
+        return userService.updateOneUser(userId,newUser);
 
     }
 
-    @DeleteMapping("/{userID}")
-    public void deleteOneUser(@PathVariable Long userID){
-        userService.deleteById(userID);
+    @DeleteMapping("/{userId}")
+    public void deleteOneUser(@PathVariable Long userId){
+        userService.deleteById(userId);
     }
 }

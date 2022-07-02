@@ -22,7 +22,7 @@ import lombok.Data;
 public class Report {
 
     @Id
-    Long Id;
+    Long id;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
@@ -30,13 +30,11 @@ public class Report {
     @JsonIgnore
     User user;
     
-
-
-    
-    @Lob
-    @Column(columnDefinition = "text")
     Long reportId;
     Long patienceId;
+
+    @Lob
+    @Column
     String patientName;
     String diseaseTitle;
     String diseaseDefinition;
