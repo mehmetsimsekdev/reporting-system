@@ -17,10 +17,10 @@ public class User {
     String userName;
     String password;
     public Object getUserName() {
-        return null;
+        return userName;
     }
     public Object getPassword() {
-        return null;
+        return password;
     }
     public void setUserName(Object userName2) {
     }
