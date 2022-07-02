@@ -46,7 +46,6 @@ public class ReportService {
         toSave.setPatienceId(newReportRequest.getPatienceId());
         toSave.setPatientName(newReportRequest.getPatientName());
         toSave.setReportDate(newReportRequest.getReportDate());
-        toSave.setReportId(newReportRequest.getReportId());
         toSave.setUser(user);
         return reportRepository.save(toSave);
 
