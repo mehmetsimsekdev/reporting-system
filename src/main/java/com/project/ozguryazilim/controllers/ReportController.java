@@ -37,6 +37,10 @@ public class ReportController {
 
     @PostMapping
     public Report createOneReport(@RequestBody ReportCreateRequest newReportRequest){
+        System.out.print(newReportRequest.getDiseaseDefinition());
+        System.out.print(newReportRequest.getId());
+        System.out.print(newReportRequest.getUserId());
+
         return reportService.createOneReport(newReportRequest);
     }
 }

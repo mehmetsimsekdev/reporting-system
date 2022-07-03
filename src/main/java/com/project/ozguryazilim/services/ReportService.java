@@ -3,6 +3,8 @@ package com.project.ozguryazilim.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+
 import org.springframework.stereotype.Service;
 
 
@@ -37,6 +39,7 @@ public class ReportService {
 
     public Report createOneReport(ReportCreateRequest newReportRequest) {
         User user = userService.getOneUser(newReportRequest.getUserId());
+        System.out.print(user.getUserName());
         if (user == null)
             return null;
         Report toSave = new Report();
@@ -47,6 +50,13 @@ public class ReportService {
         toSave.setPatientName(newReportRequest.getPatientName());
         toSave.setReportDate(newReportRequest.getReportDate());
         toSave.setUser(user);
+        System.out.print(toSave.getDiseaseDefinition());
+        System.out.print(toSave.getPatienceId());
+        System.out.println(toSave.getPatienceId().getClass());
+        System.out.println(toSave.getPatienceId().getClass().getName());
+
+
+        
         return reportRepository.save(toSave);
 
     }

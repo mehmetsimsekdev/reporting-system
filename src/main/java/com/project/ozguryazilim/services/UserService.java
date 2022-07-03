@@ -21,7 +21,7 @@ public List<User> getAllUsers() {
 }
 
 public User saveOneUser(User newUser) {
-    System.out.print(newUser.getId());
+    System.out.print(newUser.getId()); // delete
 
     return userRepository.save(newUser);
 }
@@ -31,8 +31,8 @@ public User getOneUser(Long userID) {
 }
 
 public User updateOneUser(Long userId, User newUser) {
-    System.out.print(newUser.getUserName());
-    System.out.print(userId);
+    System.out.print(newUser.getUserName()); // delete
+    System.out.print(userId); // delete
 
 
     Optional<User> user = userRepository.findById(userId);
@@ -41,7 +41,7 @@ public User updateOneUser(Long userId, User newUser) {
             foundUser.setUserName(newUser.getUserName());
             foundUser.setPassword(newUser.getPassword());
             userRepository.save(foundUser);
-            System.out.print(foundUser.getUserName());
+            System.out.print(foundUser.getUserName()); // delete
             return foundUser;
         }else 
             return null;

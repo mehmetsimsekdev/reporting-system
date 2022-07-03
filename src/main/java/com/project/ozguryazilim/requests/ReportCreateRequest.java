@@ -6,7 +6,6 @@ import lombok.Data;
 public class ReportCreateRequest {
     
     Long id;
-    Long reportId;
     Long patienceId;
     String patientName;
     String diseaseTitle;

@@ -30,11 +30,12 @@ public class Report {
     @JsonIgnore
     User user;
     
-    Long reportId;
-    Long patienceId;
 
-    @Lob
+    
+
+
     @Column
+    Long patienceId; // change to patient
     String patientName;
     String diseaseTitle;
     String diseaseDefinition;
