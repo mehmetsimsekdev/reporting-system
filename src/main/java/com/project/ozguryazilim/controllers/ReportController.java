@@ -3,9 +3,11 @@ package com.project.ozguryazilim.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.ozguryazilim.entities.Report;
 import com.project.ozguryazilim.requests.ReportCreateRequest;
+import com.project.ozguryazilim.requests.ReportUpdateRequest;
 import com.project.ozguryazilim.services.ReportService;
+import com.project.ozguryazilim.services.UserService;
 
 @RestController
 @RequestMapping("/reports")
@@ -30,17 +34,23 @@ public class ReportController {
         
     } 
 
+    @PostMapping
+    public Report createOneReport(@RequestBody ReportCreateRequest newReportRequest){
+        return reportService.createOneReport(newReportRequest);
+    }
+
     @GetMapping("/{reportId}")
     public Report getOneReport(@PathVariable Long reportId){
         return reportService.getOneReportById(reportId);
     }
 
-    @PostMapping
-    public Report createOneReport(@RequestBody ReportCreateRequest newReportRequest){
-        System.out.print(newReportRequest.getDiseaseDefinition());
-        System.out.print(newReportRequest.getId());
-        System.out.print(newReportRequest.getUserId());
-
-        return reportService.createOneReport(newReportRequest);
+    
+    @PutMapping("/{reportId}")
+    public Report updateOneReport(@PathVariable Long reportId, @RequestBody ReportUpdateRequest updateReport){
+        return reportService.updateOneReport(reportId,updateReport);
+    }
+    @DeleteMapping("/{reportId}")
+    public void deleteOneReport(@PathVariable Long reportId){
+        reportService.deleteOneReport(reportId);
     }
 }
