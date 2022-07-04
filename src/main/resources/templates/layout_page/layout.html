@@ -1,7 +1,8 @@
 
 <!DOCTYPE html >
 <!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
@@ -10,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
 
-    <title>Home</title>
+    <title layout:title-pattern="$LAYOUT_TITLE-$CONTENT_TITLE">Home</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
 
