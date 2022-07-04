@@ -12,6 +12,7 @@ import com.project.ozguryazilim.entities.Report;
 import com.project.ozguryazilim.entities.User;
 import com.project.ozguryazilim.repos.ReportRepository;
 import com.project.ozguryazilim.requests.ReportCreateRequest;
+import com.project.ozguryazilim.requests.ReportUpdateRequest;
 
 
 
@@ -39,7 +40,6 @@ public class ReportService {
 
     public Report createOneReport(ReportCreateRequest newReportRequest) {
         User user = userService.getOneUser(newReportRequest.getUserId());
-        System.out.print(user.getUserName());
         if (user == null)
             return null;
         Report toSave = new Report();
@@ -59,6 +59,25 @@ public class ReportService {
         
         return reportRepository.save(toSave);
 
+    }
+
+    public Report updateOneReport(Long reportId, ReportUpdateRequest updateReport) {
+        Optional<Report> report = reportRepository.findById(reportId);
+        if (report.isPresent()){
+            Report toUpdate = new Report();
+            toUpdate = report.get();
+            toUpdate.setDiseaseTitle(updateReport.getDiseaseTitle());
+            toUpdate.setDiseaseDefinition(updateReport.getDiseaseDefinition());
+            reportRepository.save(toUpdate);
+            return toUpdate;
+            
+        }
+        
+        return null;
+    }
+
+    public void deleteOneReport(Long reportId) {
+        reportRepository.deleteById(reportId);
     }
     
 }

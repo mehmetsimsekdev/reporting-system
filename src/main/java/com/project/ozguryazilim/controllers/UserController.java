@@ -31,9 +31,10 @@ public class UserController {
        return userService.getAllUsers();
 
     }
-    @PostMapping
-    public User createUser(@RequestBody User newUser){
-        return userService.saveOneUser(newUser);
+    @PostMapping("/")
+    public String createUser(@RequestBody User newUser){
+        userService.saveOneUser(newUser);
+        return "index.html"; 
 
     }
 
