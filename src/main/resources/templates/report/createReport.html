@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/layout}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <title>Sign Up</title>
+  </head>
+
+  <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
+    <form class="form-signin" layout:fragment="main-content">
+        <h1 class="h3 mb-3 font-weight-normal">Create a Report</h1>
+        <p></p>
+        <p></p>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Patient's name</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name Surname">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput2">Patient's Id</label>
+            <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="123456789">
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput3">Disease title</label>
+            <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="Disease title">
+          </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Disease definition</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Disease definition"></textarea>
+        </div>
+        
+
+        <div class="container">
+            <div class="row">
+              <div class='col-sm-4'>
+                  <div class="form-group">
+                      <div class='input-group date' id='datetimepicker'>
+                          <input type='text' class="form-control" placeholder="mm/dd/yyyy">
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                  </div>
+              </div>
+              <script type="text/javascript">
+                  $(function () {
+                      $('#datetimepicker').datepicker();
+                  });
+              </script>
+            </div>
+         </div>
+
+
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+      </form>
+
+ 
+
+</body>
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</html>

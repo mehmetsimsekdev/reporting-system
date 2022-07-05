@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class homePageController {
     
     @GetMapping("/")
-    public String signIn(){return "user/signIn";}
+    public String signIn(){return "report/createReport";}
 
 }
 
