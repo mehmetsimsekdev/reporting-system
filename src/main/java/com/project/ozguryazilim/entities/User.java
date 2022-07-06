@@ -17,5 +17,7 @@ public class User {
     @Column
     String userName;
     String password;
-  
+    String name; // todo: fix DB
+    String surname; 
+
 }
