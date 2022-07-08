@@ -52,10 +52,10 @@ public class SecurityConfig {
                     .exceptionHandling().authenticationEntryPoint(handler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers(UrlMapping.AUTH + UrlMapping.SIGN_UP).permitAll()
-                .antMatchers(UrlMapping.AUTH + UrlMapping.LOGIN).permitAll()
-                .antMatchers(UrlMapping.VALIDATE_JWT).permitAll()
+                .antMatchers("/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
+                .antMatchers("admin/**")
+                .hasAnyAuthority("admin")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -72,4 +72,6 @@ public class SecurityConfig {
                         .allowedMethods("*");
             }
         };
+    }
+
 }

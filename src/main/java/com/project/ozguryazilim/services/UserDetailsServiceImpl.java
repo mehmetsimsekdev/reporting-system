@@ -24,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     }
     
     public UserDetails loadUserById(Long id) {
-        User user = userRepository.findById(id).get()
+        User user = userRepository.findById(id).get();
         return JwtUserDetails.create(user);
     }
 }

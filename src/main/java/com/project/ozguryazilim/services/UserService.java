@@ -50,5 +50,9 @@ public User updateOneUser(Long userId, User newUser) {
 public void deleteById(Long userID) {
     userRepository.deleteById(userID);
 }
+
+public User getOneUserByUserName(String userName) {
+    return userRepository.findByUserName(userName);
+}
     
 }
