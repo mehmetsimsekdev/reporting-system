@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.ozguryazilim.entities.RefreshToken;
 import com.project.ozguryazilim.entities.User;
+import com.project.ozguryazilim.requests.RefreshRequest;
 import com.project.ozguryazilim.requests.UserRequest;
+import com.project.ozguryazilim.responses.AuthResponse;
 import com.project.ozguryazilim.security.JwtTokenProvider;
+import com.project.ozguryazilim.services.RefreshTokenService;
 import com.project.ozguryazilim.services.UserService;
 
 @RestController
@@ -25,35 +29,73 @@ public class AuthController {
     private JwtTokenProvider jwtTokenProvider;
     private UserService userService;
     private PasswordEncoder passwordEncoder;
-
+    private RefreshTokenService refreshTokenService;
+    
     public AuthController(AuthenticationManager authenticationManager, UserService userService, 
-    PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
+    		PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.refreshTokenService = refreshTokenService;
     }
-    
     @PostMapping("/login")
-    public String login(@RequestBody UserRequest loginRequest){
+    public AuthResponse login(@RequestBody UserRequest loginRequest){
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-        return "Bearer " + jwtToken;
+        User user = userService.getOneUserByUserName(loginRequest.getUserName());
+		AuthResponse authResponse = new AuthResponse();
+		authResponse.setAccessToken("Bearer " + jwtToken);
+		authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
+		authResponse.setUserId(user.getId());
+		return authResponse;
     }
     
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User registerRequest) {
-        if(userService.getOneUserByUserName(registerRequest.getUserName()) != null)
-            return new ResponseEntity<>("Username already in use.", HttpStatus.BAD_REQUEST);
-        
-        User user = new User();
-        user.setUserName(registerRequest.getUserName());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        userService.saveOneUser(user);
-        return new ResponseEntity<>("User successfully registered.", HttpStatus.CREATED);
+	public ResponseEntity<AuthResponse> register(@RequestBody UserRequest registerRequest) {
+		AuthResponse authResponse = new AuthResponse();
+		if(userService.getOneUserByUserName(registerRequest.getUserName()) != null) {
+			authResponse.setMessage("Username already in use.");
+			return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
+		}
+		
+		User user = new User();
+		user.setUserName(registerRequest.getUserName());
+		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+		userService.saveOneUser(user);
+		
+		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(registerRequest.getUserName(), registerRequest.getPassword());
+		Authentication auth = authenticationManager.authenticate(authToken);
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		String jwtToken = jwtTokenProvider.generateJwtToken(auth);
+		
+		authResponse.setMessage("User successfully registered.");
+		authResponse.setAccessToken("Bearer " + jwtToken);
+		authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
+		authResponse.setUserId(user.getId());
+		return new ResponseEntity<>(authResponse, HttpStatus.CREATED);		
+	}
 
-    }
+    @PostMapping("/refresh")
+	public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshRequest refreshRequest) {
+		AuthResponse response = new AuthResponse();
+		RefreshToken token = refreshTokenService.getByUser(refreshRequest.getUserId());
+		if(token.getToken().equals(refreshRequest.getRefreshToken()) &&
+				!refreshTokenService.isRefreshExpired(token)) {
+
+			User user = token.getUser();
+			String jwtToken = jwtTokenProvider.generateJwtTokenByUserId(user.getId());
+			response.setMessage("token successfully refreshed.");
+			response.setAccessToken("Bearer " + jwtToken);
+			response.setUserId(user.getId());
+			return new ResponseEntity<>(response, HttpStatus.OK);		
+		} else {
+			response.setMessage("refresh token is not valid.");
+			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+		}
+		
+	}
     
 }
