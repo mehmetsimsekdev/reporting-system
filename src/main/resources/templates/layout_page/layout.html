@@ -9,19 +9,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="icon" href="../static/img/favicon.ico" th:href="@{img/favicon.ico}" type="image/x-icon">
 
     <title layout:title-pattern="$LAYOUT_TITLE-$CONTENT_TITLE">Home</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
 
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Bootstrap core CSS a-->
+    <link href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template -->
-    <link href="../static/css/signin.css" th:href="@{/css/signin.css}" rel="stylesheet">
+    <link href="../static/css/signin.css" th:href="@{css/signin.css}" rel="stylesheet" type="text/css">
   </head>
-  
+ 
   <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="" layout:fragment="main-content">
     
     main content here 

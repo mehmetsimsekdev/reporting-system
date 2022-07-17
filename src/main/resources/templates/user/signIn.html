@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/layout}">
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sf="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" layout:decorate="~{layout_page/layout}">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -10,16 +10,22 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
   </head>
 
   <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
-    <form class="form-signin" layout:fragment="main-content">
-      <img class="mb-4" src="./Signin Template for Bootstrap_files/bootstrap-solid.svg" alt="" width="72" height="72">
+    <form class="form-signin" layout:fragment="main-content" method="post" th:action="@{/}" th:object="${loginRequest}">
+      <img class="mb-4" src="../static/img/logo.png" th:src="@{img/logo.png}" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      
       <label for="inputUsername" class="sr-only">Username</label>
-      <input type="email" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus="">
+      <input type="text" id="inputUsername"  th:field="*{userName}" name="userName" class="form-control" placeholder="Username" required="" autofocus="">
+      <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Incorrect username</p>
+      
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+      <input type="password" id="inputPassword" th:field="*{password}" name="password" class="form-control" placeholder="Password" required="">
+      <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect password</p>
+      
       <div class="checkbox mb-3">
+        
         <label>
-          <p><a href="/signUp">Sign Up</a></p>
+          <p><a href="/register">Sign Up</a></p>
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

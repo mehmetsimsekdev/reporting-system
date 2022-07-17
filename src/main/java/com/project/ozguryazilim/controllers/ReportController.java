@@ -17,7 +17,7 @@ import com.project.ozguryazilim.entities.Report;
 import com.project.ozguryazilim.requests.ReportCreateRequest;
 import com.project.ozguryazilim.requests.ReportUpdateRequest;
 import com.project.ozguryazilim.services.ReportService;
-import com.project.ozguryazilim.services.UserService;
+
 
 @RestController
 @RequestMapping("/reports")

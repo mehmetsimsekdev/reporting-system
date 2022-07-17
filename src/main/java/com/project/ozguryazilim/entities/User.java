@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class User {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @Size(min=7,max=7)
     Long id;
     
     @Column

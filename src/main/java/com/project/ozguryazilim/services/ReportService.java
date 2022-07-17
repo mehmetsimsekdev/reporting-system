@@ -13,6 +13,7 @@ import com.project.ozguryazilim.entities.User;
 import com.project.ozguryazilim.repos.ReportRepository;
 import com.project.ozguryazilim.requests.ReportCreateRequest;
 import com.project.ozguryazilim.requests.ReportUpdateRequest;
+import com.project.ozguryazilim.responses.ReportResponse;
 
 
 
