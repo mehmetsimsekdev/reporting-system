@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.util.URLEncoder;
 import org.springframework.http.HttpHeaders;
@@ -61,7 +62,7 @@ public class AuthController {
         this.refreshTokenService = refreshTokenService;
     }
     @PostMapping("/")
-    public String login(@ModelAttribute("loginRequest") UserRequest loginRequest,RedirectAttributes ra,HttpServletResponse response,HttpServletRequest request) throws IOException{
+    public String login(@ModelAttribute("signinRequest") UserRequest loginRequest,RedirectAttributes ra,HttpServletResponse response,HttpServletRequest request) throws IOException{
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -71,10 +72,6 @@ public class AuthController {
 		authResponse.setAccessToken("Bearer " + jwtToken);
 		authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
 		authResponse.setUserId(user.getId());
-		System.out.println(jwtToken);
-		System.out.println(loginRequest.getUserName());
-		System.out.println(loginRequest.getPassword());
-		request.getSession().setAttribute("token", authResponse.getAccessToken());
 		Cookie id = new Cookie("id", Long.toString(authResponse.getUserId()));
       	Cookie accessToken = new Cookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"));
 		Cookie isLogin = new Cookie("isLogin", "true");
@@ -84,31 +81,26 @@ public class AuthController {
 		response.addCookie(id);
       	response.addCookie(accessToken);
 		response.addCookie(isLogin);
-
-
-
-		System.out.println(response.getHeaderNames());
-		System.out.println(request.getHeaderNames());
-
-
-		response.sendRedirect("http://localhost:8080/reports");
+		response.sendRedirect("/reports");
 		return "";
     }
     
     @PostMapping("/register")
-	public ResponseEntity<AuthResponse> register(@RequestBody UserRequest registerRequest) {
+	public String register(@ModelAttribute("signupRequest") UserRequest signupRequest,RedirectAttributes ra,
+	HttpServletResponse response,HttpServletRequest request)throws IOException {
 		AuthResponse authResponse = new AuthResponse();
-		if(userService.getOneUserByUserName(registerRequest.getUserName()) != null) {
+		if(userService.getOneUserByUserName(signupRequest.getUserName()) != null) {
 			authResponse.setMessage("Username already in use.");
-			return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
+			response.sendRedirect("/register?error=username+is+already+in+use");
+			return "";	
 		}
 		
 		User user = new User();
-		user.setUserName(registerRequest.getUserName());
-		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+		user.setUserName(signupRequest.getUserName()); // TODO add token and id cookies and send to response
+		user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
 		userService.saveOneUser(user);
 		
-		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(registerRequest.getUserName(), registerRequest.getPassword());
+		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(signupRequest.getUserName(), signupRequest.getPassword());
 		Authentication auth = authenticationManager.authenticate(authToken);
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		String jwtToken = jwtTokenProvider.generateJwtToken(auth);
@@ -117,7 +109,17 @@ public class AuthController {
 		authResponse.setAccessToken("Bearer " + jwtToken);
 		authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
 		authResponse.setUserId(user.getId());
-		return new ResponseEntity<>(authResponse, HttpStatus.CREATED);		
+		Cookie id = new Cookie("id", Long.toString(authResponse.getUserId()));
+      	Cookie accessToken = new Cookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"));
+		Cookie isLogin = new Cookie("isLogin", "true");
+		id.setMaxAge(60*60*24);
+		accessToken.setMaxAge(60*60*24);
+		isLogin.setMaxAge(60*60*24);
+		response.addCookie(id);
+      	response.addCookie(accessToken);
+		response.addCookie(isLogin);
+		response.sendRedirect("/reports");
+		return "";
 	}
 	@GetMapping("/signout")
 	public ResponseEntity<String> logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -129,7 +131,7 @@ public class AuthController {
 				cookie.setMaxAge(0);
 				resp.addCookie(cookie);
 			}
-		resp.sendRedirect("http://localhost:8080/");
+		resp.sendRedirect("/");
 
 
 		return new ResponseEntity<>("Successfully logout", HttpStatus.OK);		

@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 import lombok.Data;
 
@@ -17,8 +20,8 @@ public class User {
 
     @Id
     @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    @Size(min=7,max=7)
+    @SequenceGenerator(name="seq",sequenceName = "idSeq", initialValue=1000000, allocationSize=50)
+    @GeneratedValue(generator = "seq")
     Long id;
     
     @Column

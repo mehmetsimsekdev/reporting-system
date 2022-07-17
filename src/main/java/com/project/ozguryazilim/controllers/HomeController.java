@@ -23,7 +23,7 @@ import com.project.ozguryazilim.requests.UserRequest;
 public class HomeController {
     
     @GetMapping("/")
-    public String signIn(@ModelAttribute("loginRequest") UserRequest loginRequest,HttpServletRequest request) {
+    public String signIn(@ModelAttribute("signinRequest") UserRequest signinRequest,HttpServletRequest request) {
         Cookie cookie = null;
         Cookie[] cookies = null;
         cookies = request.getCookies();
@@ -40,7 +40,7 @@ public class HomeController {
     }
 
     @GetMapping("/register")
-    public String register(HttpServletRequest request){
+    public String register(@ModelAttribute("signupRequest") UserRequest signupRequest,HttpServletRequest request){
         Cookie cookie = null;
         Cookie[] cookies = null;
         cookies = request.getCookies();

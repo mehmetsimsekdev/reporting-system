@@ -10,10 +10,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sf="http://www.w
   </head>
 
   <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
-    <form class="form-signin" layout:fragment="main-content" method="post" th:action="@{/}" th:object="${loginRequest}">
+    <form class="form-signin" layout:fragment="main-content" method="post" th:action="@{/}" th:object="${signinRequest}">
       <img class="mb-4" src="../static/img/logo.png" th:src="@{img/logo.png}" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      
       <label for="inputUsername" class="sr-only">Username</label>
       <input type="text" id="inputUsername"  th:field="*{userName}" name="userName" class="form-control" placeholder="Username" required="" autofocus="">
       <p th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Incorrect username</p>
