@@ -44,22 +44,13 @@ public class ReportService {
         if (user == null)
             return null;
         Report toSave = new Report();
-        toSave.setId(newReportRequest.getId());
         toSave.setDiseaseDefinition(newReportRequest.getDiseaseDefinition());
         toSave.setDiseaseTitle(newReportRequest.getDiseaseTitle());
         toSave.setPatienceId(newReportRequest.getPatienceId());
         toSave.setPatientName(newReportRequest.getPatientName());
         toSave.setReportDate(newReportRequest.getReportDate());
         toSave.setUser(user);
-        System.out.print(toSave.getDiseaseDefinition());
-        System.out.print(toSave.getPatienceId());
-        System.out.println(toSave.getPatienceId().getClass());
-        System.out.println(toSave.getPatienceId().getClass().getName());
-
-
-        
         return reportRepository.save(toSave);
-
     }
 
     public Report updateOneReport(Long reportId, ReportUpdateRequest updateReport) {

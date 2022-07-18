@@ -13,15 +13,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
     <form class="form-signin" layout:fragment="main-content" method="post" th:action="@{/register}" th:object="${signupRequest}">
       <img class="mb-4" src="../static/img/logo.png" th:src="@{img/logo.png}" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Create an Account</h1>
-      <p th:text="${param.error}">Test</p>
+      <p th:text="${param.error}">username already taken</p>
 
 
       <label for="inputEmail" class="sr-only">Username</label>
-      <input type="text" id="inputEmail" th:field="*{userName}" name="userName" class="form-control" placeholder="Username " required="" autofocus="">
+      <input type="text" id="inputEmail" th:field="*{userName}" name="userName" class="form-control" placeholder="Username " maxlength="15" required="" autofocus="">
       <p th:if="${param.error}" class="alert alert-danger" th:errors="*{userName}">Incorrect username</p>
+      <input type="text" id="name" th:field="*{name}" name="name" class="form-control" placeholder="Name Surname"  maxlength="20" required="">
 
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" th:field="*{password}" name="password" class="form-control" placeholder="Password" required="">
+      <input type="password" id="inputPassword" th:field="*{password}" name="password" class="form-control" placeholder="Password" maxlength="20" required="">
       <div class="checkbox mb-3">
         <label>
           <p>Have already an account? <a href="/">Login here</a></p>
@@ -32,5 +33,4 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
     </form>
     
 </body>
-<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 </html>

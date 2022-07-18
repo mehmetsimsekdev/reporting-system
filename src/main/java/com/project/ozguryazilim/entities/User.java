@@ -20,12 +20,13 @@ public class User {
 
     @Id
     @Column(unique = true, nullable = false)
-    @SequenceGenerator(name="seq",sequenceName = "idSeq", initialValue=1000000, allocationSize=50)
+    @SequenceGenerator(name="seq",sequenceName = "reportSeq", initialValue=1000000, allocationSize=50)
     @GeneratedValue(generator = "seq")
     Long id;
     
     @Column
     String userName;
     String password;
+    String name;
 
 }

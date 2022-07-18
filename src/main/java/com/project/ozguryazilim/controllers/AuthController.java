@@ -98,6 +98,7 @@ public class AuthController {
 		User user = new User();
 		user.setUserName(signupRequest.getUserName()); // TODO add token and id cookies and send to response
 		user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+		user.setName(signupRequest.getName());
 		userService.saveOneUser(user);
 		
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(signupRequest.getUserName(), signupRequest.getPassword());

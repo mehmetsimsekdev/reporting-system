@@ -3,9 +3,11 @@ package com.project.ozguryazilim.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -21,6 +23,9 @@ import lombok.Data;
 public class Report {
 
     @Id
+    @Column(unique = true, nullable = false)
+    @SequenceGenerator(name="seq",sequenceName = "idSeq", initialValue=1000000, allocationSize=50)
+    @GeneratedValue(generator = "seq")
     Long id;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,5 +44,4 @@ public class Report {
     String diseaseTitle;
     String diseaseDefinition;
     String reportDate;
-
 }

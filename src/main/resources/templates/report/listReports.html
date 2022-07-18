@@ -16,87 +16,42 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
         <div  style="justify-content: center; align-items: center; margin: 0; padding: 0;">
 
               <div  style="width: 925px;" class="input-group">
-                <input type="search" class="form-control rounded" placeholder="Name or mm/dd/yyyy" aria-label="" aria-describedby="search-addon" />
+                   <input type="search" class="form-control rounded" placeholder="Patient name or dd/yy/yyyy" aria-label="" aria-describedby="search-addon" />
                 <button type="button" class="btn btn-outline-primary">search</button>
               </div>
             <div class="row">
-                <div class="post-list">
+                <div class="post-list" th:each="p :${reports}">
                     <div class="row" >
                         <div class="col-sm-2">
                             <div class="picture">
                                 <img alt="Opt wizard thumbnail" src="../static/img/person-icon.png" th:src="@{img/person-icon.png}">
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <h4>
-                                <a hre="#" class="username">Deyson Bejarano</a>
-                                <label class="label label-info">#BootdeyFromDeyDey</label>
-                            </h4>
-                            <h5> 
-                            <i class="fa fa-calendar"></i>
-                            Aug 06, 12:48 
-                            </h5>
-                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim..</p>    
-                        </div>
-                        <div class="col-sm-4" data-no-turbolink="">
-                            <a class="btn btn-info btn-download btn-round pull-right makeLoading" href="#">
-                            <i class="fa fa-share"></i> View
-                            </a>            
-                        </div>
-                    </div>
-                </div>
-                <div class="post-list">
-                    <div class="row" >
-                        <div class="col-sm-2">
-                            <div class="picture">
-                                <img alt="Opt wizard thumbnail" src="../static/img/person-icon-blue-7560.png" th:src="@{img/person-icon-blue-7560.png}">
+                        <div class="col-sm-2 d-flex justify-content-center align-items-center">
+                            <div>
+                                <p th:text="${p.id}">Report Id</p>
+
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <h4>
-                                <a hre="#" class="username">Deyson Bejarano</a>
-                                <label class="label label-info">#BootdeyFromDeyDey</label>
+                                <a hre="#" class="username" th:text="${p.patientName}">Deyson Bejarano</a>
                             </h4>
-                            <h5> 
-                            <i class="fa fa-calendar"></i>
-                            Aug 06, 12:48 
-                            </h5>
-                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim..</p>    
+                            <h6> 
+                                <a hre="#" class="username" th:text="${p.reportDate}">Deyson Bejarano</a>
+ 
+                            </h6>
+                        <div style="width:500px; word-break:break-all;">
+                            <p class="description" th:text="${p.diseaseDefinition}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim..</p>    
                         </div>
-                        <div class="col-sm-4" data-no-turbolink="">
-                            <a class="btn btn-info btn-download btn-round pull-right makeLoading" href="#">
+                        </div>
+                        <div class="col-sm-2" data-no-turbolink="">
+                            <a class="btn btn-info btn-download btn-round pull-right makeLoading" th:href="'/report/'+ ${p.id}">
                             <i class="fa fa-share"></i> View
                             </a>            
                         </div>
                     </div>
                 </div>
-                <div class="post-list">
-                    <div class="row" >
-                        <div class="col-sm-2">
-                            <div class="picture">
-                                <img alt="Opt wizard thumbnail" src="../static/img/person-icon-blue-7560.png" th:src="@{img/person-icon-blue-7560.png}">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <h4>
-                                <a hre="#" class="username">Deyson Bejarano</a>
-                                <label class="label label-info">#BootdeyFromDeyDey</label>
-                            </h4>
-                            <h5> 
-                            <i class="fa fa-calendar"></i>
-                            Aug 06, 12:48 
-                            </h5>
-                            <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim..</p>    
-                        </div>
-                        <div class="col-sm-4" data-no-turbolink="">
-                            <a class="btn btn-info btn-download btn-round pull-right makeLoading" href="#">
-                            <i class="fa fa-share"></i> View
-                            </a>            
-                        </div>
-                    </div>
-                </div>
-                
-                
             </div>
         
     </div>

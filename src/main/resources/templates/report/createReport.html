@@ -5,52 +5,46 @@
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/layout}">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-    <title>Sign Up</title>
+  
+    <title>Create Report</title>
   </head>
 
   <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
-    <form class="form-signin" layout:fragment="main-content">
+    <form class="form-signin" method="post" layout:fragment="main-content" th:action="@{/reportCreate}" th:object="${newReport}">
         <h1 class="h3 mb-3 font-weight-normal">Create a Report</h1>
         <p></p>
         <p></p>
         <div class="form-group">
           <label for="exampleFormControlInput1">Patient's name</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name Surname">
+          <input type="text" class="form-control" th:field="*{patientName}" name="patientName" id="exampleFormControlInput1" placeholder="Name Surname" required="">
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput2">Patient's Id</label>
-            <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="123456789">
+            <input type="text" class="form-control" th:field="*{patienceId}" name="patienceId" id="exampleFormControlInput2" placeholder="123456789"required="">
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput3">Disease title</label>
-            <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="Disease title">
+            <input type="text" class="form-control" th:field="*{diseaseTitle}" name="diseaseTitle" id="exampleFormControlInput3" placeholder="Disease title"required="">
           </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Disease definition</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Disease definition"></textarea>
+          <textarea style="height:170px" class="form-control" rows="3" placeholder="Disease definition" th:field="*{diseaseDefinition}" name="diseaseDefinition" id="exampleFormControlTextarea1"  required=""></textarea>
         </div>
         
 
         <div class="container">
             <div class="row">
-              <div class='col-sm-4'>
+              <div class='col-sm-6'>
                   <div class="form-group">
                       <div class='input-group date' id='datetimepicker'>
-                          <input type='text' class="form-control" placeholder="mm/dd/yyyy">
-                          <span class="input-group-addon">
+                        <input data-provide="datepicker" th:field="*{reportDate}" name="reportDate"  data-date-format="dd/mm/yyyy"  startDate="" placeholder="Select date" required >
+                        <span class="input-group-addon">
                               <span class="glyphicon glyphicon-calendar"></span>
                           </span>
                       </div>
                   </div>
               </div>
-              <script type="text/javascript">
-                  $(function () {
-                      $('#datetimepicker').datepicker();
-                  });
-              </script>
+              
             </div>
          </div>
 
@@ -61,5 +55,5 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
  
 
 </body>
-<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+
 </html>
