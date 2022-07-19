@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -72,17 +73,36 @@ public class ReportController {
     }
 
     @GetMapping("report/{reportId}")
-    public Report getOneReport(@PathVariable Long reportId){
-        return reportService.getOneReportById(reportId);
+    public ModelAndView getOneReport(@PathVariable Long reportId,Model model){
+        Report report = reportService.getOneReportById(reportId);
+        model.addAttribute("report", report);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("report/reportDesign");
+        return modelAndView;
     }
 
-    
-    @PutMapping("/{reportId}")
-    public Report updateOneReport(@PathVariable Long reportId, @RequestBody ReportUpdateRequest updateReport){
-        return reportService.updateOneReport(reportId,updateReport);
+    @GetMapping(value="reportEdit/{reportId}")
+    public ModelAndView updateOneReportPage(@PathVariable Long reportId, @ModelAttribute("updatedReport") ReportUpdateRequest updateReport,Model model){
+        Report report = reportService.getOneReportById(reportId);
+        model.addAttribute("oldReport", report);
+        model.addAttribute("oldReportId",reportId);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("report/editReport");
+        return modelAndView;
     }
-    @DeleteMapping("/{reportId}")
-    public void deleteOneReport(@PathVariable Long reportId){
+    
+   
+    @PostMapping(value="reportEdit/{reportId}")
+    public void updateOneReport(@PathVariable Long reportId, @ModelAttribute("updatedReport") ReportUpdateRequest updateReport,HttpServletResponse response)throws IOException{
+        Report newReport =reportService.updateOneReport(reportId,updateReport);
+        response.sendRedirect("/report/"+reportId);
+    }
+    
+
+    @PostMapping("reportDelete/{reportId}")
+    public void deleteOneReport(@PathVariable Long reportId,HttpServletResponse response) throws IOException{
         reportService.deleteOneReport(reportId);
+        response.sendRedirect("/reports");
+
     }
 }

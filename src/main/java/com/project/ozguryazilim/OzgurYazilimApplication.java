@@ -9,6 +9,7 @@ public class OzgurYazilimApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OzgurYazilimApplication.class, args);
+	
 	}
 
 }

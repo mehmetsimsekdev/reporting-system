@@ -1,10 +1,12 @@
 
+    
 <!DOCTYPE html>
 <!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/layout}">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     
     <link href="../static/css/listReport.css" th:href="@{css/listReport.css}" rel="stylesheet">
 
@@ -12,43 +14,56 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
   </head>
 
   <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
-    
-<!DOCTYPE html>
-<!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/layout}">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    
-    <link href="../static/css/listReport.css" th:href="@{/css/listReport.css}" rel="stylesheet">
-
-    <title>Account details</title>
-  </head>
-
-  <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
-    <div style="width: 1000px;" class="panel panel-default" layout:fragment="main-content">
-        <!-- Default panel contents -->
-        <div style="background-color: #E4E6E3; height: 40px;" class="panel-heading border">Panel heading</div>
-        <div style="background-color: #E4E6E3" class="panel-body">
-          <p>...</p>
-        </div>
+    <div style="justify-content: center; align-items: center;" class="container text-center" layout:fragment="main-content" th:object="${report}">
+      <h1 class="h3 mb-3 font-weight-normal">Report Details</h1>
+      <table class="table table-bordered " >
+        <thead>
+          <tr style="background-color: rgb(192, 190, 190);">
+            <th scope="col">Report Id</th>
+            <th scope="col">Report Date</th>
+            <th scope="col">Patience Id</th>
+            <th scope="col">Patience Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td th:text="*{id}">Report id here</td>
+            <td th:text="*{reportDate}">Report Date here</td>
+            <td th:text="*{patienceId}">Patience Id here</td>
+            <td th:text="*{patientName}">Patience Name here</td>
+          </tr>
+        </tbody>  
+      </table>
+      <div  class="d-flex justify-content-md-center align-items-center vh-100" style="height:50px;">
+        <div class="col-4 table-bordered h-100 d-inline-block d-flex justify-content-md-center align-items-center" style="background-color: rgb(192, 190, 190);"><h6><strong>Disease Title</strong></h6></div>
+        <div class="col-8 table-bordered h-100 d-inline-block d-flex justify-content-md-center align-items-center" th:text="*{diseaseTitle}">Disease Title here</div>
+        
+      </div>
+      <div  class="d-flex justify-content-md-center align-items-center vh-100" style="height:300px;margin-top: 20px;">
+        <div class="col-4 table-bordered h-100 d-inline-block d-flex justify-content-md-center align-items-center"style="background-color: rgb(192, 190, 190);"><h6><strong>Disease Definition</strong></h6></div>
+        <div class="col-8 table-bordered h-100 d-inline-block d-flex justify-content-md-center align-items-center" th:text="*{diseaseDefinition}">Disease Definition here</div>
+        
+      </div>
+      <div  class="d-flex justify-content-md-center align-items-center vh-100" style="height:50px;margin-top: 20px; ">
+        <div class="col-4 table-bordered h-100 d-inline-block d-flex justify-content-md-center align-items-center"style="background-color: rgb(192, 190, 190);"><h6><strong>Report Given by</strong></h6></div>
+        <div class="col-8 table-bordered h-100 d-inline-block d-flex justify-content-md-center align-items-center" th:text="*{user.name}">laborant name username</div>
+        
+      </div>
+      <div  class="d-flex justify-content-md-center align-items-center vh-100" style="height:50px;margin-top: 40px;">
+        <div class="col-4  h-100 d-inline-block d-flex justify-content-md-center align-items-center"><a th:href="'/reportEdit/'+*{id}" role="button" class="btn btn-lg btn-primary btn-block" type="button">Edit</a></div>
+        <div class="col-8  h-100 ">
+        <form class="mb-3" th:method="post" th:action="@{'/reportDelete/'+*{id}}" >
+        <button class="btn btn-lg btn-primary btn-danger btn-block" type="submit"><a role="submit"  onclick="return confirm('Are you sure you want to delete the report?');"  type="submit">Delete</a></button>
+      </form>
+    </div>
+      </div>
       
-        <!-- List group -->
-        <ul class="list-group">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Morbi leo risus</li>
-          <li class="list-group-item">Porta ac consectetur ac</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>     
+      
+    </div>
 </body>
-<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 </html>
 
               
 
 </body>
-<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 </html>

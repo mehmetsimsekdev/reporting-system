@@ -58,8 +58,11 @@ public class ReportService {
         if (report.isPresent()){
             Report toUpdate = new Report();
             toUpdate = report.get();
+            toUpdate.setPatientName(updateReport.getPatientName());
+            toUpdate.setPatienceId(updateReport.getPatienceId());
             toUpdate.setDiseaseTitle(updateReport.getDiseaseTitle());
             toUpdate.setDiseaseDefinition(updateReport.getDiseaseDefinition());
+            toUpdate.setReportDate(updateReport.getReportDate());
             reportRepository.save(toUpdate);
             return toUpdate;
             

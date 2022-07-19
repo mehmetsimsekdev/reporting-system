@@ -5,26 +5,29 @@
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/layout}">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
   
     <title>Create Report</title>
   </head>
 
   <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
-    <form class="form-signin" method="post" layout:fragment="main-content" th:action="@{/reportCreate}" th:object="${newReport}">
+    <form class="form-signin border-right border-left" method="post" layout:fragment="main-content" th:action="@{/reportCreate}" th:object="${newReport}">
         <h1 class="h3 mb-3 font-weight-normal">Create a Report</h1>
         <p></p>
         <p></p>
         <div class="form-group">
           <label for="exampleFormControlInput1">Patient's name</label>
-          <input type="text" class="form-control" th:field="*{patientName}" name="patientName" id="exampleFormControlInput1" placeholder="Name Surname" required="">
+          <input type="text" class="form-control" th:field="*{patientName}" name="patientName" id="exampleFormControlInput1" placeholder="Name Surname" maxlength="20" required="">
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput2">Patient's Id</label>
-            <input type="text" class="form-control" th:field="*{patienceId}" name="patienceId" id="exampleFormControlInput2" placeholder="123456789"required="">
+            <input type="text" class="form-control" th:field="*{patienceId}" name="patienceId" id="exampleFormControlInput2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="123456789"required="" maxlength="20">
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput3">Disease title</label>
-            <input type="text" class="form-control" th:field="*{diseaseTitle}" name="diseaseTitle" id="exampleFormControlInput3" placeholder="Disease title"required="">
+            <input type="text" class="form-control" th:field="*{diseaseTitle}" name="diseaseTitle" id="exampleFormControlInput3" placeholder="Disease title"required="" maxlength="100">
           </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Disease definition</label>
@@ -36,8 +39,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
             <div class="row">
               <div class='col-sm-6'>
                   <div class="form-group">
-                      <div class='input-group date' id='datetimepicker'>
-                        <input data-provide="datepicker" th:field="*{reportDate}" name="reportDate"  data-date-format="dd/mm/yyyy"  startDate="" placeholder="Select date" required >
+                      <div class='input-group date' id='datetimepicker' >
+                        <input class="form-control courtdata" data-provide="datepicker" data-date-format="dd/mm/yyyy" th:field="*{reportDate}" name="reportDate"  placeholder="Select date" required >
                         <span class="input-group-addon">
                               <span class="glyphicon glyphicon-calendar"></span>
                           </span>
@@ -47,7 +50,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
               
             </div>
          </div>
-
+         <script>
+                    $(document).ready(function() {
+            $("#reportDate").datepicker({
+              format: "dd/mm/yyyy",
+              todayHighlight: true,
+              autoclose: true,
+              clearBtn: true
+            });
+          });
+           </script>
+         
 
           <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
       </form>

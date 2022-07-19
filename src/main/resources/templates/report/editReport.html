@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout_page/layout}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+  
+    <title>Edit Report</title>
+  </head>
+
+  <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
+    <form class="form-signin border-right border-left" method="post" layout:fragment="main-content" th:action="@{'/reportEdit/'+${oldReportId}}" th:object="${updatedReport}">
+        <h1 class="h3 mb-3 font-weight-normal">Edit Report</h1>
+        <p></p>
+        <p></p>
+        <div class="form-group">
+          <label for="patientName">Patient's name</label>
+          <input type="text" class="form-control"  name="patientName" id="patientName" th:value="${oldReport.patientName}" maxlength="20" required="">
+        </div>
+        <div class="form-group">
+            <label for="patienceId">Patient's Id</label>
+            <input type="text" class="form-control"  name="patienceId" id="patienceId" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" th:value="${oldReport.patienceId}"required="" maxlength="20">
+          </div>
+          <div class="form-group">
+            <label for="diseaseTitle">Disease title</label>
+            <input type="text" class="form-control"  name="diseaseTitle" id="diseaseTitle" th:value="${oldReport.diseaseTitle}"required="" maxlength="100">
+          </div>
+        <div class="form-group">
+          <label for="diseaseDefinition">Disease definition</label>
+         <textarea style="height:170px;" class="form-control" rows="20"  name="diseaseDefinition" id="diseaseDefinition"  th:text="${oldReport.diseaseDefinition}"required=""></textarea>
+        </div>
+        
+
+        <div class="container">
+            <div class="row">
+              <div class='col-sm-6'>
+                  <div class="form-group">
+                      <div class='input-group date' id='datetimepicker'>
+                        <input data-provide="datepicker"  name="reportDate" id="reportDate" data-date-format="dd/mm/yyyy"  startDate="" th:value="${oldReport.reportDate}" required >
+                        <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                  </div>
+              </div>
+              
+            </div>
+         </div>
+         <script>
+                  $(document).ready(function() {
+          $("#reportDate").datepicker({
+            format: "dd/mm/yyyy",
+            todayHighlight: true,
+            autoclose: true,
+            clearBtn: true
+          });
+        });
+        </script>
+
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Edit</button>
+      </form>
+
+ 
+
+</body>
+
+</html>
