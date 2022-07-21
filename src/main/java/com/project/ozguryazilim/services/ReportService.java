@@ -81,13 +81,11 @@ public class ReportService {
         List<Report> reportsFound = new ArrayList<>();
         Optional<Report> reportFound;
         if(keyword.matches("[0-9]+")){
-            System.out.println("ccccccccccccccccc");
             Long longKeyword = Long.parseLong(keyword);
             reportFound = reportRepository.findById(longKeyword);
             if(reportFound.isPresent())
                 reportsFound.add(reportFound.get());
             reportsFound.addAll(reportRepository.findByPatienceId(longKeyword));
-            System.out.println("dddddddddddddd");
 
             }else{
             reportsFound.addAll(reportRepository.findByPatientName(keyword));

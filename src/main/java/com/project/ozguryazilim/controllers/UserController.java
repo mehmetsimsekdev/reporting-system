@@ -57,7 +57,6 @@ public class UserController {
     @GetMapping("/{userId}")
 	public ModelAndView getOneUser(@PathVariable Long userId, User newUser,Model model) {
 		User user = userService.getOneUserById(userId);
-		System.out.println(user);
 		model.addAttribute("currentUser", user);
 		model.addAttribute("userId", userId);
 		if(user == null) {

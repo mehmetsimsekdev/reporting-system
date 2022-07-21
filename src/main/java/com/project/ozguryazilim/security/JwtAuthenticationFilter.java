@@ -9,9 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.codehaus.groovy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +23,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.project.ozguryazilim.requests.RefreshRequest;
+import com.project.ozguryazilim.responses.AuthResponse;
+import com.project.ozguryazilim.services.CookieService;
+import com.project.ozguryazilim.services.RefreshTokenService;
 import com.project.ozguryazilim.services.UserDetailsServiceImpl;
 
 import groovyjarjarantlr4.v4.parse.ANTLRParser.exceptionGroup_return;
@@ -30,9 +36,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
-    
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    RefreshTokenService refreshTokenService;
+    @Autowired
+    CookieService cookieService;
   
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -41,43 +50,38 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         final Logger LOGGER = Logger.getLogger( ClassName.class.getName() );
 
         try{
+            String jwtToken =null;
             
-            Cookie cookie = null;
-            Cookie[] cookies = null;
-            cookies = request.getCookies();
-            String jwtToken = null;
-            if( cookies != null ) {
-                for (int i = 0; i < cookies.length; i++) {
-                   cookie = cookies[i];
-                   if(cookie.getName().equals("access_token")){
-                        break;
+            if( cookieService.searchCookie("access_token", request) != null ) {
                 
-                    } 
-                }
-                jwtToken= java.net.URLDecoder.decode(cookie.getValue(), "UTF-8");
+                jwtToken= java.net.URLDecoder.decode(cookieService.searchCookie("access_token", request), "UTF-8");
             }else {
-                Cookie id = new Cookie("id", null);
-      	        Cookie accessToken = new Cookie("access_token", null);
-                id.setMaxAge(60*60*24);
-                accessToken.setMaxAge(60*60*24);
-                response.addCookie( id );
-                response.addCookie( accessToken );
+                cookieService.addCookie("id", null, 60*60, response);
+                cookieService.addCookie("access_token", null, 60*60, response);
                 LOGGER.info("no cooikes");
 
              }
     
 
             
-            if(StringUtils.hasText(jwtToken) && jwtTokenProvider.validateToken(jwtToken)){
+            if(StringUtils.hasText(jwtToken) && jwtTokenProvider.validateToken(jwtToken)){                
                 Long id = jwtTokenProvider.getUserIdFromJwt(jwtToken);
                 UserDetails user = userDetailsService.loadUserById(id);
-                System.out.println("hereeeeeeeeeeeeeeee");
+
+                RefreshRequest refreshRequest= new RefreshRequest(id, refreshTokenService.getByUser(id).getToken());
+                ResponseEntity<AuthResponse> authResponse = refreshTokenService.refresh(refreshRequest);
+               
+                String newToken =authResponse.getBody().getAccessToken();
+                cookieService.addCookie("access_token", java.net.URLEncoder.encode(newToken, "UTF-8"), 60*60, response); 
+
                 if(user != null){
                     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                     auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(auth);
 
                 }
+                
+
             }
         } catch(Exception e){
             LOGGER.info("exception e");

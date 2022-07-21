@@ -39,6 +39,7 @@ import com.project.ozguryazilim.requests.RefreshRequest;
 import com.project.ozguryazilim.requests.UserRequest;
 import com.project.ozguryazilim.responses.AuthResponse;
 import com.project.ozguryazilim.security.JwtTokenProvider;
+import com.project.ozguryazilim.services.CookieService;
 import com.project.ozguryazilim.services.RefreshTokenService;
 import com.project.ozguryazilim.services.UserService;
 
@@ -52,51 +53,41 @@ public class AuthController {
     private UserService userService;
     private PasswordEncoder passwordEncoder;
     private RefreshTokenService refreshTokenService;
+	private CookieService cookieService;
     
     public AuthController(AuthenticationManager authenticationManager, UserService userService, 
-    		PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService) {
+    		PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService,CookieService cookieService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.refreshTokenService = refreshTokenService;
+		this.cookieService=cookieService;
     }
     @PostMapping("/")
-    public String login(@ModelAttribute("signinRequest") UserRequest loginRequest,HttpServletResponse response,HttpServletRequest request) throws IOException{
+    public void login(@ModelAttribute("signinRequest") UserRequest loginRequest,HttpServletResponse response,HttpServletRequest request) throws IOException{
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
         User user = userService.getOneUserByUserName(loginRequest.getUserName());
-		AuthResponse authResponse = new AuthResponse();
-		authResponse.setAccessToken("Bearer " + jwtToken);
-		authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
-		authResponse.setUserId(user.getId());
-	
+
+		cookieService.addCookie("id", Long.toString(user.getId()), 60*60, response);
+		cookieService.addCookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"), 60*60, response);
+		cookieService.addCookie("isLogin", "true", 60*60, response);
 		
+		response.sendRedirect("/reports");
 
 		
-		Cookie id = new Cookie("id", Long.toString(authResponse.getUserId()));
-      	Cookie accessToken = new Cookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"));
-		Cookie isLogin = new Cookie("isLogin", "true");
-		id.setMaxAge(60*60*24);
-		accessToken.setMaxAge(60*60*24);
-		isLogin.setMaxAge(60*60*24);
-		response.addCookie(id);
-      	response.addCookie(accessToken);
-		response.addCookie(isLogin);
-		response.sendRedirect("/reports");
-		return "";
     }
     
     @PostMapping("/register")
-	public String register(@ModelAttribute("signupRequest") UserRequest signupRequest,RedirectAttributes ra,
+	public void register(@ModelAttribute("signupRequest") UserRequest signupRequest,RedirectAttributes ra,
 	HttpServletResponse response,HttpServletRequest request)throws IOException {
 		AuthResponse authResponse = new AuthResponse();
 		if(userService.getOneUserByUserName(signupRequest.getUserName()) != null) {
 			authResponse.setMessage("Username already in use.");
 			response.sendRedirect("/register?error=username+is+already+in+use");
-			return "";	
 		}
 		
 		User user = new User();
@@ -105,38 +96,23 @@ public class AuthController {
 		user.setName(signupRequest.getName());
 		userService.saveOneUser(user);
 
-
-		
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(signupRequest.getUserName(), signupRequest.getPassword());
 		Authentication auth = authenticationManager.authenticate(authToken);
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-		
-		authResponse.setMessage("User successfully registered.");
-		authResponse.setAccessToken("Bearer " + jwtToken);
-		authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
-		authResponse.setUserId(user.getId());
-		Cookie id = new Cookie("id", Long.toString(authResponse.getUserId()));
-      	Cookie accessToken = new Cookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"));
-		Cookie isLogin = new Cookie("isLogin", "true");
-		id.setMaxAge(60*60*24);
-		accessToken.setMaxAge(60*60*24);
-		isLogin.setMaxAge(60*60*24);
-		response.addCookie(id);
-      	response.addCookie(accessToken);
-		response.addCookie(isLogin);
+
+		cookieService.addCookie("id", Long.toString(user.getId()), 60*60, response);
+		cookieService.addCookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"), 60*60, response);
+		cookieService.addCookie("isLogin", "true", 60*60, response);
+
 		response.sendRedirect("/reports");
-		return "";
 	}
 	@GetMapping("/signout")
 	public ResponseEntity<String> logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Cookie[] cookies = req.getCookies();
 		if (cookies != null)
 			for (Cookie cookie : cookies) {
-				cookie.setValue("");
-				cookie.setPath("/");
-				cookie.setMaxAge(0);
-				resp.addCookie(cookie);
+				cookieService.deleteCookie(cookie.getName(), resp);
 			}
 		resp.sendRedirect("/");
 
@@ -145,7 +121,7 @@ public class AuthController {
 	}
 
 
-    @PostMapping("/refresh")
+    /*@PostMapping("/refresh")
 	public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshRequest refreshRequest) {
 		AuthResponse response = new AuthResponse();
 		RefreshToken token = refreshTokenService.getByUser(refreshRequest.getUserId());
@@ -163,6 +139,6 @@ public class AuthController {
 			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
 		}
 		
-	}
+	}*/
     
 }
