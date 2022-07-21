@@ -62,7 +62,7 @@ public class AuthController {
         this.refreshTokenService = refreshTokenService;
     }
     @PostMapping("/")
-    public String login(@ModelAttribute("signinRequest") UserRequest loginRequest,RedirectAttributes ra,HttpServletResponse response,HttpServletRequest request) throws IOException{
+    public String login(@ModelAttribute("signinRequest") UserRequest loginRequest,HttpServletResponse response,HttpServletRequest request) throws IOException{
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -72,6 +72,10 @@ public class AuthController {
 		authResponse.setAccessToken("Bearer " + jwtToken);
 		authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user));
 		authResponse.setUserId(user.getId());
+	
+		
+
+		
 		Cookie id = new Cookie("id", Long.toString(authResponse.getUserId()));
       	Cookie accessToken = new Cookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"));
 		Cookie isLogin = new Cookie("isLogin", "true");
@@ -100,6 +104,8 @@ public class AuthController {
 		user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
 		user.setName(signupRequest.getName());
 		userService.saveOneUser(user);
+
+
 		
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(signupRequest.getUserName(), signupRequest.getPassword());
 		Authentication auth = authenticationManager.authenticate(authToken);

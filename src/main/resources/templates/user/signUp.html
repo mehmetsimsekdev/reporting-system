@@ -9,7 +9,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
     <title>Sign Up</title>
   </head>
 
-  <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
+  <body class="text-center">
     <form class="form-signin" layout:fragment="main-content" method="post" th:action="@{/register}" th:object="${signupRequest}">
       <img class="mb-4" src="../static/img/logo.png" th:src="@{img/logo.png}" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Create an Account</h1>
@@ -29,7 +29,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
-      <p class="mt-5 mb-3 text-muted">© 2022</p>
     </form>
     
 </body>

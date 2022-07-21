@@ -1,5 +1,6 @@
 package com.project.ozguryazilim.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,9 @@ public class ReportService {
     }
 
     public List<Report> getAllreports(Optional<Long> userId) {
-        if(userId.isPresent())
+        if(userId.isPresent()){
             return reportRepository.findByUserId(userId.get());
+        }
         return reportRepository.findAll();
     } 
 
@@ -73,6 +75,27 @@ public class ReportService {
 
     public void deleteOneReport(Long reportId) {
         reportRepository.deleteById(reportId);
+    }
+
+    public List<Report> getReportsByKeyword(String keyword) {
+        List<Report> reportsFound = new ArrayList<>();
+        Optional<Report> reportFound;
+        if(keyword.matches("[0-9]+")){
+            System.out.println("ccccccccccccccccc");
+            Long longKeyword = Long.parseLong(keyword);
+            reportFound = reportRepository.findById(longKeyword);
+            if(reportFound.isPresent())
+                reportsFound.add(reportFound.get());
+            reportsFound.addAll(reportRepository.findByPatienceId(longKeyword));
+            System.out.println("dddddddddddddd");
+
+            }else{
+            reportsFound.addAll(reportRepository.findByPatientName(keyword));
+            reportsFound.addAll(reportRepository.findByDiseaseTitle(keyword));
+            reportsFound.addAll(reportRepository.findByDiseaseTitle(keyword));
+            reportsFound.addAll(reportRepository.findByReportDate(keyword));
+            }
+        return reportsFound;
     }
     
 }

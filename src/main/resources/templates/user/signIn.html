@@ -9,7 +9,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sf="http://www.w
     <title>Sign In</title>
   </head>
 
-  <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
+  <body class="text-center">
     <form class="form-signin" layout:fragment="main-content" method="post" th:action="@{/}" th:object="${signinRequest}">
       <img class="mb-4" src="../static/img/logo.png" th:src="@{img/logo.png}" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -24,11 +24,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sf="http://www.w
       <div class="checkbox mb-3">
         
         <label>
-          <p><a href="/register">Sign Up</a></p>
+          <p>Don't have an account? <a href="/register">Sign Up</a></p>
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">© 2022</p>
     </form>
   
 

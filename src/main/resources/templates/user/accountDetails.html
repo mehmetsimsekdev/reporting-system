@@ -10,35 +10,31 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
   </head>
 
   <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="">
-    <div class="container rounded bg-white mt-5 mb-5 border" layout:fragment="main-content">
-        <div class="row">
-            <div class="col-md-3 border-right">
-         <!-- edit here with upload pp button-->       <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" alt="pp" src="../static/img/abstract-user-flat-4.png" th:src="@{img/abstract-user-flat-4.png}"><span class="font-weight-bold">name-surname</span><span class="text-black-50">Tile</span><span> </span></div>
-            </div>
-            <div class="col-md-5 border-right">
+    <div  class="container mt-1 mb-5  " layout:fragment="main-content">
+        <form class="col-md-12 container d-flex align-items-center justify-content-center " method="post"  th:action="@{${userId}}" th:object="${updatedUser}">
+            <div class="col-md-5 border-right border-left">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="text-right">Profile Settings</h4>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="First name" value=""></div>
-                        <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="Surname"></div>
+                        <div class="col-md-8"><label class="labels">Name</label><input type="text"  class="form-control" name="name" id="name" th:value="${currentUser.name}" required></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels"> Username</label><input type="text" class="form-control" placeholder="Username" value=""></div>
-                        <div class="col-md-12"><label class="labels">Password</label><input type="password" class="form-control" placeholder="Password" value=""></div>
+                        <div class="col-md-12"><label class="labels"> Username</label><input type="text" class="form-control" name="userName" id="userName" th:value="${currentUser.userName}" required></div>
+                        <div class="col-md-12"><label class="labels">Password</label><input type="password" class="form-control" name="password" id="password" placeholder="Current Password or New Password" required></div>
                     </div>
                     
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save the Changes</button></div>
                 </div>
+            </div>
+            </form>
               
-            </div>
-            <div class="col-md-4">
-               <!-- edit here with account details --> <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" alt="pp" src="../static/img/abstract-user-flat-4.png" th:src="@{img/abstract-user-flat-4.png}"><span class="font-weight-bold">name-surname</span><span class="text-black-50">Tile</span><span> </span></div>
-            </div>
+            
+            
             
         </div>
-    </div>
+        
     
   
 

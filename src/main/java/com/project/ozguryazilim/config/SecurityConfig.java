@@ -43,7 +43,7 @@ public class SecurityConfig {
     public JwtAuthenticationFilter jwtAuthenticationFilter(){
         return new JwtAuthenticationFilter();
     }
-    
+
     @Bean
         public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
             return authenticationConfiguration.getAuthenticationManager();

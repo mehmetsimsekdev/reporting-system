@@ -20,10 +20,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <link href="../static/css/signin.css" th:href="@{~/css/signin.css}" rel="stylesheet" type="text/css">
   </head>
  
-  <body class="text-center" data-new-gr-c-s-check-loaded="14.1067.0" data-gr-ext-installed="" layout:fragment="main-content">
-    
-    main content here 
+  <body style="display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom:40px ;
+  overflow-y:auto;
+  height: auto;
+  margin-top: 100px;">
+    <header th:replace="layout_page/header :: header"></header>
+    <main class="text-center" layout:fragment="main-content">main content here</main>  
+    <footer th:replace="layout_page/footer :: footer"></footer>  
+     
 
 </body>
-<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 </html>

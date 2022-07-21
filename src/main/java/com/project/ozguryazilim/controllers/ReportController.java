@@ -105,4 +105,16 @@ public class ReportController {
         response.sendRedirect("/reports");
 
     }
+
+    @GetMapping("reportSearch")
+    public ModelAndView reportSearch(@RequestParam String keyword,Model model){
+        List<Report> reportsList = reportService.getReportsByKeyword(keyword);
+        model.addAttribute("reports",reportsList);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("report/listReports");
+        return modelAndView;
+
+
+
+    }
 }

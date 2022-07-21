@@ -34,6 +34,7 @@ public class JwtUserDetails implements UserDetails{
         authoritiesList.add(new SimpleGrantedAuthority("user"));
         return new JwtUserDetails(user.getId(), user.getUserName(), user.getPassword(), authoritiesList);
     }
+    
 
     @Override
     public boolean isAccountNonExpired() {
