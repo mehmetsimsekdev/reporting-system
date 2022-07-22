@@ -67,7 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             if(StringUtils.hasText(jwtToken) && jwtTokenProvider.validateToken(jwtToken)){                
                 Long id = jwtTokenProvider.getUserIdFromJwt(jwtToken);
                 UserDetails user = userDetailsService.loadUserById(id);
-
+               
                 RefreshRequest refreshRequest= new RefreshRequest(id, refreshTokenService.getByUser(id).getToken());
                 ResponseEntity<AuthResponse> authResponse = refreshTokenService.refresh(refreshRequest);
                

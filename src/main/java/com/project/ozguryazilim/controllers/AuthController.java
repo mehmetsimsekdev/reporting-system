@@ -34,6 +34,7 @@ import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.ozguryazilim.entities.RefreshToken;
+import com.project.ozguryazilim.entities.Role;
 import com.project.ozguryazilim.entities.User;
 import com.project.ozguryazilim.requests.RefreshRequest;
 import com.project.ozguryazilim.requests.UserRequest;
@@ -52,17 +53,18 @@ public class AuthController {
     private JwtTokenProvider jwtTokenProvider;
     private UserService userService;
     private PasswordEncoder passwordEncoder;
-    private RefreshTokenService refreshTokenService;
 	private CookieService cookieService;
+	private RefreshTokenService refreshTokenService;
+
     
     public AuthController(AuthenticationManager authenticationManager, UserService userService, 
-    		PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, RefreshTokenService refreshTokenService,CookieService cookieService) {
+    		PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, CookieService cookieService, RefreshTokenService refreshTokenService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.refreshTokenService = refreshTokenService;
 		this.cookieService=cookieService;
+		this.refreshTokenService = refreshTokenService;
     }
     @PostMapping("/")
     public void login(@ModelAttribute("signinRequest") UserRequest loginRequest,HttpServletResponse response,HttpServletRequest request) throws IOException{
@@ -72,9 +74,11 @@ public class AuthController {
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
         User user = userService.getOneUserByUserName(loginRequest.getUserName());
 
+		refreshTokenService.createRefreshToken(user);
+
 		cookieService.addCookie("id", Long.toString(user.getId()), 60*60, response);
 		cookieService.addCookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"), 60*60, response);
-		cookieService.addCookie("isLogin", "true", 60*60, response);
+		//cookieService.addCookie("isLogin", "true", 60*60, response);
 		
 		response.sendRedirect("/reports");
 
@@ -82,7 +86,7 @@ public class AuthController {
     }
     
     @PostMapping("/register")
-	public void register(@ModelAttribute("signupRequest") UserRequest signupRequest,RedirectAttributes ra,
+	public void register(@ModelAttribute("signupRequest") UserRequest signupRequest,
 	HttpServletResponse response,HttpServletRequest request)throws IOException {
 		AuthResponse authResponse = new AuthResponse();
 		if(userService.getOneUserByUserName(signupRequest.getUserName()) != null) {
@@ -94,7 +98,10 @@ public class AuthController {
 		user.setUserName(signupRequest.getUserName()); // TODO add token and id cookies and send to response
 		user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
 		user.setName(signupRequest.getName());
+		user.setRole(Role.USER);
 		userService.saveOneUser(user);
+
+		refreshTokenService.createRefreshToken(user);
 
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(signupRequest.getUserName(), signupRequest.getPassword());
 		Authentication auth = authenticationManager.authenticate(authToken);
@@ -103,7 +110,7 @@ public class AuthController {
 
 		cookieService.addCookie("id", Long.toString(user.getId()), 60*60, response);
 		cookieService.addCookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"), 60*60, response);
-		cookieService.addCookie("isLogin", "true", 60*60, response);
+		//cookieService.addCookie("isLogin", "true", 60*60, response);
 
 		response.sendRedirect("/reports");
 	}
@@ -121,24 +128,5 @@ public class AuthController {
 	}
 
 
-    /*@PostMapping("/refresh")
-	public ResponseEntity<AuthResponse> refresh(@RequestBody RefreshRequest refreshRequest) {
-		AuthResponse response = new AuthResponse();
-		RefreshToken token = refreshTokenService.getByUser(refreshRequest.getUserId());
-		if(token.getToken().equals(refreshRequest.getRefreshToken()) &&
-				!refreshTokenService.isRefreshExpired(token)) {
 
-			User user = token.getUser();
-			String jwtToken = jwtTokenProvider.generateJwtTokenByUserId(user.getId());
-			response.setMessage("token successfully refreshed.");
-			response.setAccessToken("Bearer " + jwtToken);
-			response.setUserId(user.getId());
-			return new ResponseEntity<>(response, HttpStatus.OK);		
-		} else {
-			response.setMessage("refresh token is not valid.");
-			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-		}
-		
-	}*/
-    
 }

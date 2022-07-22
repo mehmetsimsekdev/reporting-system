@@ -86,14 +86,16 @@ public class SecurityConfig {
         .exceptionHandling().authenticationEntryPoint(handler).and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET,"/","/register","/signout")
-        .permitAll()
-        .antMatchers(HttpMethod.POST,"/","/register","/signout")
-        .permitAll()
+        .antMatchers(HttpMethod.GET,"/","/register")
+        .anonymous()
+        .antMatchers(HttpMethod.POST,"/","/register")
+        .anonymous()
+        .antMatchers(HttpMethod.POST,"/reportDelete**")
+        .hasAuthority("ROLE_ADMIN")
         .antMatchers("/css/**", "/img/**")
         .permitAll()
         .anyRequest()
-        .authenticated();
+        .hasAnyAuthority("ROLE_ADMIN","ROLE_USER","ROLE_GUEST");
 
                     
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -24,35 +24,13 @@ public class HomeController {
     
     @GetMapping("/")
     public String signIn(@ModelAttribute("signinRequest") UserRequest signinRequest,HttpServletRequest request) {
-        Cookie cookie = null;
-        Cookie[] cookies = null;
-        cookies = request.getCookies();
-        if( cookies != null ) {
-            for (int i = 0; i < cookies.length; i++) {
-               cookie = cookies[i];
-               if(cookie.getName().equals("isLogin") || cookie.getValue().equals("true")){
-                    return "redirect:/reports";
-                                    
-                } 
-            }
-        }
+        
         return "user/signIn";
     }
 
     @GetMapping("/register")
     public String register(@ModelAttribute("signupRequest") UserRequest signupRequest,HttpServletRequest request){
-        Cookie cookie = null;
-        Cookie[] cookies = null;
-        cookies = request.getCookies();
-        if( cookies != null ) {
-            for (int i = 0; i < cookies.length; i++) {
-               cookie = cookies[i];
-               if(cookie.getName().equals("isLogin") || cookie.getValue().equals("true")){
-                    return "redirect:/reports";
-                                    
-                } 
-            }
-        }
+       
         return "user/signUp";
     }
    
