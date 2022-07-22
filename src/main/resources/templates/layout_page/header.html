@@ -30,6 +30,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                 <li class="nav-item dropdown">
                   <a class="nav-link" th:href="'/reports?userId='+${#authentication.getPrincipal().getId()}">My Reports</a>
                 </li>
+                <li  style="margin-left: 15px;" class="nav-item dropdown btn-info" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                  <a class="nav-link" href="/users">ADMIN PAGE</a>
+                </li>
                 <li style="position: absolute; right: 20px;" class="nav-item dropdown">
                   <a class="nav-link" href="/signout">Sign Out</a>
                 </li>

@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.ozguryazilim.entities.Role;
 import com.project.ozguryazilim.entities.User;
 import com.project.ozguryazilim.repos.UserRepository;
 import com.project.ozguryazilim.security.JwtTokenProvider;
@@ -53,21 +54,29 @@ public User getOneUser(Long userID) {
     return userRepository.findById(userID).orElse(null);
 }
 
-public User updateOneUser(Long userId, User newUser,HttpServletResponse response) throws UnsupportedEncodingException {
+public User updateOneUser(Long userId, User newUser) throws UnsupportedEncodingException {
 
     Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()){
             User foundUser = user.get();
             foundUser.setUserName(newUser.getUserName());
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            System.out.println(newUser.getPassword());
-            System.out.println(passwordEncoder.encode(newUser.getPassword()));
             foundUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             foundUser.setName(newUser.getName());            
             userRepository.save(foundUser);
             return foundUser;
         }else 
             return null;
+}
+
+public void editOneUserRole(Long userId, Role newUserRole){
+    Optional<User> user = userRepository.findById(userId);
+    if(user.isPresent()){
+        User foundUser= user.get();
+        foundUser.setRole(newUserRole);
+        userRepository.save(foundUser);
+
+
+    }
 }
 
 public void deleteById(Long userId) {

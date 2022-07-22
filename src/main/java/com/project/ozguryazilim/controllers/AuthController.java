@@ -78,7 +78,6 @@ public class AuthController {
 
 		cookieService.addCookie("id", Long.toString(user.getId()), 60*60, response);
 		cookieService.addCookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"), 60*60, response);
-		//cookieService.addCookie("isLogin", "true", 60*60, response);
 		
 		response.sendRedirect("/reports");
 
@@ -110,7 +109,6 @@ public class AuthController {
 
 		cookieService.addCookie("id", Long.toString(user.getId()), 60*60, response);
 		cookieService.addCookie("access_token", java.net.URLEncoder.encode(jwtToken, "UTF-8"), 60*60, response);
-		//cookieService.addCookie("isLogin", "true", 60*60, response);
 
 		response.sendRedirect("/reports");
 	}
