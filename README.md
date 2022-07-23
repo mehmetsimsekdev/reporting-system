@@ -19,7 +19,8 @@ Reporting System web application for hospitals and laboratories.
   + USER can read, create and edit reports
   + GUEST can only read reports
 - Customizable user profile
-- Avanced report rearch option
+- Detailed report design
+- Advanced report search option
 - Option to convert report to pdf
 - Jwt authentication system
 
