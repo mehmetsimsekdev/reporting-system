@@ -24,10 +24,35 @@ Reporting System web application for hospitals and laboratories.
 - Jwt authentication system
 
 ## 1.2. Build instructions
+The source code can be built using maven. **Reporting System** is a Springboot project. 
 
 ### 1.2.1. Build requirements
+ - Git (to clone repo)
+ - Maven (for linux `sudo apt install maven`) if downloaded before, you can check with `mvn -version  `
+ - A database on your computer local or web-based application([phpmayadmin](https://www.phpmyadmin.net/) etc.) etc.
 
 ### 1.2.2. Build steps
+
+ 1. Open terminal and change the current working directory to the location where you want the cloned directory. 
+  **Clone** source code.
+   	
+    `git clone https://github.com/mehmetsimseknet/reporting-system.git`
+  
+ 2. Enter into `reporting-system/src/main/resources` and open **application.properties**. You can connect your database with url,username and password.
+  
+ 3. Go back to source directory again
+    
+    `cd yourFolder/reporting-system`
+  
+ 4. Run maven command
+    
+    `mvn spring-boot:run`
+
+ 5. And application will be active on **port 8090**.
+    
+    `http://localhost:8090/`
+
+
 
 ## 1.3. Screenshots
 ![Reporting System Login](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-45-17.png?raw=true)
