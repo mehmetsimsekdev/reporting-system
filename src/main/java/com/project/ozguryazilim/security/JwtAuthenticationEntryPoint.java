@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,authException.getMessage()); 
-        }   
+            response.sendRedirect("/?error=Wrong!+you+can't+authorize.");
+  }   
 
         @ExceptionHandler (value = {AccessDeniedException.class})
         public void commence(HttpServletRequest request, HttpServletResponse response,
         AccessDeniedException accessDeniedException) throws IOException {
         // 403 
+        System.out.println("bbbbbbbbbbbbbbbb");    
 
         response.sendError(HttpServletResponse.SC_FORBIDDEN, "Authorization Failed : " + accessDeniedException.getMessage());
         }

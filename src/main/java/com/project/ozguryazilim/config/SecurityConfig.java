@@ -92,6 +92,8 @@ public class SecurityConfig {
         .permitAll()
         .antMatchers(HttpMethod.POST,"/reportDelete/**")
         .hasAuthority("ROLE_ADMIN")
+        .antMatchers(HttpMethod.POST,"/reportEdit/**","/reportCreate")
+        .hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
         .antMatchers("/users**","edit/{userId}**","delete/{userId}")
         .hasAuthority("ROLE_ADMIN")
         .antMatchers("/users/{userId}")

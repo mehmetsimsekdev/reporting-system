@@ -14,7 +14,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
         <div  class="container text-center" style="justify-content: center; align-items: center;" layout:fragment="main-content">
             <form method="get" th:action="'/reportSearch?' + ${keyword}">
               <div style="margin-left: 40px;" class="input-group col-md-10">
-                   <input type="search" class="form-control  rounded" id="keyword" name="keyword" placeholder="Patient name or dd/yy/yyyy" aria-label="" aria-describedby="search-addon" />
+                   <input type="search" class="form-control  rounded" id="keyword" name="keyword" placeholder="Enter a keyword about the report. (Report id, Patient name or id etc.)" aria-label="" aria-describedby="search-addon" />
                 <button type="submit" class="btn btn-info btn-download">Search</button>
               </div>
             </form>

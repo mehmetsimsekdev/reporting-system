@@ -68,12 +68,11 @@ public class AuthController {
     }
     @PostMapping("/")
     public void login(@ModelAttribute("signinRequest") UserRequest loginRequest,HttpServletResponse response,HttpServletRequest request) throws IOException{
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
-        Authentication auth = authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication(auth);
+		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
+		Authentication auth = authenticationManager.authenticate(authToken);
+		SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
         User user = userService.getOneUserByUserName(loginRequest.getUserName());
-
 		refreshTokenService.createRefreshToken(user);
 
 		cookieService.addCookie("id", Long.toString(user.getId()), 60*60, response);
