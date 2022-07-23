@@ -33,4 +33,7 @@ Reporting System web application for hospitals and laboratories.
 ![Reporting System Login](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-45-17.png?raw=true)
 ![Reporting System Reports](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-45-46.png?raw=true)
 ![Reporting System Report Design](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-46-08.png?raw=true)
-!
+![Reporting System Create Report](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-46-17.png?raw=true)
+![Reporting System Account Details](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-46-24.png?raw=true)
+![Reporting System Admin Page](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-46-33.png?raw=true)
+![Reporting System Database](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2022-23-45.png?raw=true)
