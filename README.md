@@ -1,32 +1,36 @@
-- [Reporting System](#reporting-system)
-  - [Reporting System Key Features](#reporting-system-key-features)
-  - [Build instructions](#build-instructions)
-    - [Build requirements](#build-requirements)
-    - [Build steps](#build-steps)
-  - [Screenshots](#screenshots)
+- [1. Reporting System](#1-reporting-system)
+  - [1.1. Reporting System Key Features](#11-reporting-system-key-features)
+  - [1.2. Build instructions](#12-build-instructions)
+    - [1.2.1. Build requirements](#121-build-requirements)
+    - [1.2.2. Build steps](#122-build-steps)
+  - [1.3. Screenshots](#13-screenshots)
+ 
 
-# Reporting System
+# 1. Reporting System
 
 Reporting System web application for hospitals and laboratories.
 
-## Reporting System Key Features
+## 1.1. Reporting System Key Features
 
 - Light, simple and useful theme
-- Authorization system with 3 different roles : ADMIN,USER,GUEST
-        + ADMIN can read, create, edit and delete reports
-        + ADMIN can change anyone's role and delete anyone member to system in the admin page
-        + USER can read, create and edit reports
-        + GUEST can only read reports
+- Authorization system with 3 different roles : ADMIN,USER,GUEST:
+  + ADMIN can read, create, edit and delete reports
+  + ADMIN can change anyone's role and delete anyone member to system in the admin page
+  + USER can read, create and edit reports
+  + GUEST can only read reports
 - Customizable user profile
 - Avanced report rearch option
 - Option to convert report to pdf
 - Jwt authentication system
 
-## Build instructions
+## 1.2. Build instructions
 
-### Build requirements
+### 1.2.1. Build requirements
 
-### Build steps
+### 1.2.2. Build steps
 
-## Screenshots
-        
+## 1.3. Screenshots
+![Reporting System Login](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-45-17.png?raw=true)
+![Reporting System Reports](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-45-46.png?raw=true)
+![Reporting System Report Design](https://github.com/mehmetsimseknet/reporting-system/blob/main/screenshots/Screenshot%20from%202022-07-23%2021-46-08.png?raw=true)
+!
